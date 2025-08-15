@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include"logger.h"
@@ -150,6 +149,7 @@ public:
 				loginOk = false;
 				while (!loginOk) {
 					to = _server.Receive();
+					
 					if (!(to == "all")) {
 						if (_db.checkLogin(to)) {
 							loginOk = true;
@@ -157,6 +157,7 @@ public:
 							_server.Send("1");
 							text = _server.Receive();
 							_db.add_privateMsg(_currUser, to, text);
+							log.write(to, _currUser, text);
 						}
 						else
 							_server.Send("0");
@@ -165,7 +166,8 @@ public:
 						loginOk = true;
 						text = _server.Receive();
 						_db.add_publicMsg(_currUser, text);
-					}
+						log.write(to, _currUser, text);
+					} 
 				}
 				break;
 			case 6:
@@ -187,18 +189,18 @@ public:
 	}
 
 private:
-	string _currUser;	//¨±¨‡¨›¨Ó¨Ÿ¨‡¨”¨—¨‰¨÷¨›¨Ó ¨‡¨ﬂ-¨›¨—¨€¨ﬂ
-	bool _entry;			// ¨±¨‚¨‡¨”¨÷¨‚¨‹¨— ¨”¨‡¨Í¨÷¨’¨Í¨⁄¨Á = ¨·¨‚¨⁄¨„¨Â¨‰¨„¨‰¨”¨Â¨¨Î¨⁄¨Á
+	string _currUser;	//–ü–æ–ª—å–∑–æ–≤–∞—Ç–µ–ª—å –æ–Ω-–ª–∞–π–Ω
+	bool _entry;			// –ü—Ä–æ–≤–µ—Ä–∫–∞ –≤–æ—à–µ–¥—à–∏—Ö = –ø—Ä–∏—Å—É—Ç—Å—Ç–≤—É—é—â–∏—Ö
 	bool _conn;
 
-	Server _server;			
-	string _ip;		    // IP ¨„¨÷¨‚¨”¨÷¨‚
-	uint16_t _port;			    // ¨·¨‡¨‚¨‰ ¨„¨÷¨‚¨”¨÷¨‚¨—
+	Server _server;
+	string _ip;		    // IP —Å–µ—Ä–≤–µ—Ä
+	uint16_t _port;			    // –ø–æ—Ä—Ç —Å–µ—Ä–≤–µ—Ä–∞
 
-	Database _db;			/// ¨∞¨“¨Ï¨÷¨‹¨‰ ¨¢¨•
-	string _dbHost;		// ¨°¨’¨‚¨÷¨„ ¨¢¨•
-	string _dbUser;		// ¨±¨‡¨›¨Ó¨Ÿ¨‡¨”¨—¨‰¨÷¨›¨Ó ¨¢¨•
-	string _dbPass;	// ¨±¨—¨‚¨‡¨›¨Ó ¨·¨‡¨›¨Ó¨Ÿ¨‡¨”¨—¨‰¨÷¨›¨Ò ¨¢¨•
-	string _dbName;		// ¨™¨ﬁ¨Ò ¨¢¨•
-
+	Database _db;			/// –û–±—ä–µ–∫—Ç –ë–î
+	string _dbHost;		// –ê–¥—Ä–µ—Å –ë–î
+	string _dbUser;		// –ü–æ–ª—å–∑–æ–≤–∞—Ç–µ–ª—å –ë–î
+	string _dbPass;	// –ü–∞—Ä–æ–ª—å –ø–æ–ª—å–∑–æ–≤–∞—Ç–µ–ª—è –ë–î
+	string _dbName;		// –ò–º—è –ë–î
+	Logger log;
 };
