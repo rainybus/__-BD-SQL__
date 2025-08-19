@@ -17,9 +17,9 @@ Logger::~Logger() { file_.close(); }
 void Logger::write(const string& to, const string& _currUser,
     const string& content)
 {
-    unique_lock<shared_mutex> l(sh_, try_to_lock);
+    unique_lock<shared_mutex> lmute(sh_, try_to_lock);
     file_.seekp(0, ios::end);
-    if (l.owns_lock()) {
+    if (lmute.owns_lock()) {
         file_ << "to " << to << ". from " << _currUser
             << ". messages: " << content << std::endl;
     }
