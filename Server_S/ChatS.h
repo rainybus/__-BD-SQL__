@@ -7,6 +7,23 @@
 #include <string>
 
 class Chat_S {
+
+private:
+	string _currUser;	//Пользователь он-лайн
+	bool _entry;			// Проверка вошедших = присутствующих
+	bool _conn;
+
+	Server _server;
+	string _ip;		    // IP сервер
+	uint16_t _port;			    // порт сервера
+
+	Database _db;			/// Объект БД
+	string _dbHost;		// Адрес БД
+	string _dbUser;		// Пользователь БД
+	string _dbPass;	// Пароль пользователя БД
+	string _dbName;		// Имя БД
+	Logger log;
+
 public:
 	Chat_S(const string& ip, const uint16_t port,
 		const string& dbHost, const string& dbUser, const string& dbPass, const string& dbName) :
@@ -187,20 +204,5 @@ public:
 			}
 		}
 	}
-
-private:
-	string _currUser;	//Пользователь он-лайн
-	bool _entry;			// Проверка вошедших = присутствующих
-	bool _conn;
-
-	Server _server;
-	string _ip;		    // IP сервер
-	uint16_t _port;			    // порт сервера
-
-	Database _db;			/// Объект БД
-	string _dbHost;		// Адрес БД
-	string _dbUser;		// Пользователь БД
-	string _dbPass;	// Пароль пользователя БД
-	string _dbName;		// Имя БД
-	Logger log;
 };
+
