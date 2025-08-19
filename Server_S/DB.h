@@ -13,6 +13,14 @@ using namespace std;
 
 
 class Database {
+
+private:
+	MYSQL* _mysql;				// дескриптор соединения с БД
+	string _dbHost;		// хост БД
+	string _dbUser;		// пользователь БД
+	string _dbPass;	// пароль
+	string _dbName;		// имя БД
+
 public:
 	Database() {};
 
@@ -49,19 +57,19 @@ public:
 			cout << "DB exists & connected!" << endl;
 		}
 
-		//  ����լܬݬ��֬߬ڬ� �� ����
+		//  Подключение к БД
 		_mysql = mysql_init(NULL);
 		if (!mysql_real_connect(_mysql, _dbHost.c_str(), _dbUser.c_str(), _dbPass.c_str(), _dbName.c_str(), 0, NULL, 0)) {
-			// ����ڬҬܬ� ���լܬݬ�ج֬߬ڬ�
+			// Ошибка подклюжения
 			cout << "Error: can't connect to database " << _dbName << "  " << mysql_error(_mysql) << endl;
 			return;
 		}
 		else {
-			// �����Ѭ߬�Ӭܬ� ���֬լڬ߬֬߬ڬ�    "Success!"
+			// Установка соединения    "Success!"
 			cout << _dbName << " is on air! " << endl;
 		}
 
-		createTable(); // ����٬լѬ߬ڬ� ��ѬҬݬڬ��
+		createTable(); // Создание таблицы
 		
 		//mysql_set_character_set(_mysql, "utf8");
 		mysql_set_character_set(_mysql, "utf8mb4");
@@ -204,17 +212,9 @@ public:
 		return AllMsg;
 	}
 
-	
-private:
-	MYSQL* _mysql;				// �լ֬�ܬ�ڬ���� ���֬լڬ߬֬߬ڬ� �� ����
-	string _dbHost;		// ����� ����
-	string _dbUser;		// ���ݬ�٬�ӬѬ�֬ݬ� ����
-	string _dbPass;	// ��Ѭ��ݬ�
-	string _dbName;		// �ڬެ� ����
-
 	void createTable() {
 		int result{};
-		// ��ѬҬݬڬ�� ���ݬ�٬�ӬѬ�֬ݬ֬�
+		// таблица пользователей
 		result = mysql_query(_mysql, "create table if not exists Users"
 			"(id int auto_increment primary key, "
 			"name varchar(255), "
@@ -227,7 +227,7 @@ private:
 			cout << "No Table 'Users' is found!" << endl;
 		}
 
-		//  ��ѬҬݬڬ�� �ݬڬ�߬��� ����Ҭ�֬߬ڬ�
+		//  таблица личных сообщений
 		result = mysql_query(_mysql, "create table if not exists PrivateMessages"
 			"(id int auto_increment primary key,"
 			"senderId int references Users(id), "
@@ -240,7 +240,7 @@ private:
 			cout << " No 'Private Messages' Table is found!" << endl;
 		}
 
-		// ��ѬҬݬڬ�� ��Ҭ�ڬ� ����Ҭ�֬߬ڬ�
+		// таблица общих сообщений
 		result = mysql_query(_mysql, "create table if not exists Messages"
 			"(id int auto_increment primary key,"
 			"senderId int references Users(id), "
@@ -253,4 +253,6 @@ private:
 		}
 	}
 };
+
+
 
