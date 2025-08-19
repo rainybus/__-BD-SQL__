@@ -21,7 +21,7 @@ public:
 		_ip = ip;
 		_port = port;
 
-		WSADATA WSAData; // ¨•¨—¨ﬂ¨ﬂ¨Ì¨÷ 
+		WSADATA WSAData; // –î–∞–Ω–Ω—ã–µ 
 		WORD ver = MAKEWORD(2, 2);
 
 		int wsInit = WSAStartup(MAKEWORD(2, 2), &WSAData);
@@ -35,13 +35,13 @@ public:
 
 	void startServer() {
 
-		server = socket(AF_INET, SOCK_STREAM, 0); // ¨„¨÷¨‚¨”¨÷¨‚
+		server = socket(AF_INET, SOCK_STREAM, 0); // —Å–µ—Ä–≤–µ—Ä
 
 		if (server == INVALID_SOCKET) {
 			cout << "Socket creation failed with error:" << WSAGetLastError() << endl;
 			return;
 		}
-		SOCKADDR_IN serverAddr, clientAddr; // ¨°¨’¨‚¨÷¨„¨— ¨„¨‡¨‹¨÷¨‰¨‡¨”
+		SOCKADDR_IN serverAddr, clientAddr; // –ê–¥—Ä–µ—Å–∞ —Å–æ–∫–µ—Ç–æ–≤
 		serverAddr.sin_addr.s_addr = INADDR_ANY;
 		serverAddr.sin_family = AF_INET;
 		serverAddr.sin_port = htons(_port);
@@ -51,23 +51,23 @@ public:
 			return;
 		}
 
-		if (listen(server, 0) == SOCKET_ERROR) { // ¨¶¨„¨›¨⁄ ¨ﬂ¨÷ ¨Â¨’¨—¨›¨‡¨„¨Ó ¨·¨‡¨›¨Â¨È¨⁄¨‰¨Ó ¨Ÿ¨—¨·¨‚¨‡¨„
+		if (listen(server, 0) == SOCKET_ERROR) { // –ï—Å–ª–∏ –Ω–µ —É–¥–∞–ª–æ—Å—å –ø–æ–ª—É—á–∏—Ç—å –∑–∞–ø—Ä–æ—Å
 			cout << "Listen function failed with error:" << WSAGetLastError() << endl;
 			return;
 		}
 		cout << "Listening for incoming connections...." << endl;
 
-		int clientAddrSize = sizeof(clientAddr); // ¨™¨ﬂ¨⁄¨Ë¨⁄¨—¨›¨⁄¨Ÿ¨⁄¨‚¨‡¨”¨—¨‰¨Ó ¨—¨’¨÷¨‚¨„ ¨‹¨›¨⁄¨÷¨ﬂ¨‰¨—
+		int clientAddrSize = sizeof(clientAddr); // –ò–Ω–∏—Ü–∏–∞–ª–∏–∑–∏—Ä–æ–≤–∞—Ç—å –∞–¥–µ—Ä—Å –∫–ª–∏–µ–Ω—Ç–∞
 		if ((client = accept(server, (SOCKADDR*)&clientAddr, &clientAddrSize)) != INVALID_SOCKET) {
-			// ¨¶¨„¨›¨⁄ ¨„¨‡¨÷¨’¨⁄¨ﬂ¨÷¨ﬂ¨⁄¨÷ ¨Â¨„¨‰¨—¨ﬂ¨‡¨”¨›¨÷¨ﬂ¨‡
+			// –ï—Å–ª–∏ —Å–æ–µ–¥–∏–Ω–µ–Ω–∏–µ —É—Å—Ç–∞–Ω–æ–≤–ª–µ–Ω–æ
 			cout << "Client connected!" << endl;
 		}
 	}
 
 	void closeServer() const {
-		closesocket(client); // ¨©¨—¨‹¨‚¨Ì¨‰¨Ó ¨„¨‡¨‹¨÷¨‰
+		closesocket(client); // –ó–∞–∫—Ä—ã—Ç—å —Å–æ–∫–µ—Ç
 
-		if (closesocket(server) == SOCKET_ERROR) { // ¨∞¨Í¨⁄¨“¨‹¨— ¨Ÿ¨—¨‹¨‚¨Ì¨‰¨⁄¨Ò ¨„¨‡¨‹¨÷¨‰¨—
+		if (closesocket(server) == SOCKET_ERROR) { // –û—à–∏–±–∫–∞ –∑–∞–∫—Ä—ã—Ç–∏—è —Å–æ–∫–µ—Ç–∞
 			cout << "Close socket failed with error: " << WSAGetLastError() << endl;
 			return;
 		}
@@ -77,7 +77,7 @@ public:
 	string Receive() {
 		message.clear();
 		if (recv(client, buffer, sizeof(buffer), 0) == SOCKET_ERROR) {
-			// // ¨¶¨„¨›¨⁄ ¨ﬂ¨÷ ¨Â¨’¨—¨›¨‡¨„¨Ó ¨·¨‡¨›¨Â¨È¨⁄¨‰¨Ó ¨’¨—¨ﬂ¨ﬂ¨Ì¨÷ ¨“¨Â¨Ê¨÷¨‚¨—, ¨„¨‡¨‡¨“¨Î¨⁄¨‰¨Ó ¨‡¨“ ¨‡¨Í¨⁄¨“¨‹¨÷ ¨⁄ ¨”¨Ì¨€¨‰¨⁄
+			// // –ï—Å–ª–∏ –Ω–µ —É–¥–∞–ª–æ—Å—å –ø–æ–ª—É—á–∏—Ç—å –¥–∞–Ω–Ω—ã–µ –±—É—Ñ–µ—Ä–∞, —Å–æ–æ–±—â–∏—Ç—å –æ–± –æ—à–∏–±–∫–µ –∏ –≤—ã–π—Ç–∏
 			std::cout << "recv function failed with error " << WSAGetLastError() << endl;
 			return "";
 		}
@@ -99,8 +99,8 @@ public:
 private:
 	string _ip{};
 	uint16_t _port{};
-	SOCKET server, client; //  ¨≥¨‡¨‹¨÷¨‰¨Ì ¨„¨÷¨‚¨”¨÷¨‚¨— ¨⁄ ¨‹¨›¨⁄¨÷¨ﬂ¨‰¨—
-	char buffer[messageLen] = { 0 }; // ¨¢¨Â¨Ê¨÷¨‚ ¨’¨—¨ﬂ¨ﬂ¨Ì¨Á
+	SOCKET server, client; //  –°–æ–∫–µ—Ç—ã —Å–µ—Ä–≤–µ—Ä–∞ –∏ –∫–ª–∏–µ–Ω—Ç–∞
+	char buffer[messageLen] = { 0 }; // –ë—É—Ñ–µ—Ä –¥–∞–Ω–Ω—ã—Ö
 	string message{};
 
 };
