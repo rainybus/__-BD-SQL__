@@ -23,7 +23,7 @@ public:
 		_ip = ip;
 		_port = port;
 
-		WSADATA WSAData; //¬¥¬Ñ¬ß¬ß¬í¬Ö
+		WSADATA WSAData; //Ð”Ð°Ð½Ð½Ñ‹Ðµ
 		int wsInit = WSAStartup(MAKEWORD(2, 2), &WSAData);
 
 		if (wsInit != 0) {
@@ -35,17 +35,17 @@ public:
 
 	void startClient() {
 
-		client = socket(AF_INET, SOCK_STREAM, 0); // ¬¬¬Ý¬Ú¬Ö¬ß¬ä
+		client = socket(AF_INET, SOCK_STREAM, 0); // ÐšÐ»Ð¸ÐµÐ½Ñ‚
 
 		if (client == INVALID_SOCKET) {
 			cout << "Failed to create socket : " << WSAGetLastError() << endl;
 			return;
 		}
 
-		SOCKADDR_IN clientAddr; //¬¡¬Õ¬â¬Ö¬ã ¬ã¬à¬Ü¬Ö¬ä¬Ñ
-		clientAddr.sin_addr.s_addr = inet_addr(_ip.c_str()); ///¬ã¬à¬Ö¬Õ¬Ú¬ß¬Ö¬ß¬Ú¬Ö ¬ã ¬ã¬Ö¬â¬Ó¬Ö¬â¬à¬Þ
+		SOCKADDR_IN clientAddr; //ÐÐ´Ñ€ÐµÑ ÑÐ¾ÐºÐµÑ‚Ð°
+		clientAddr.sin_addr.s_addr = inet_addr(_ip.c_str()); ///ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ðµ Ñ ÑÐµÑ€Ð²ÐµÑ€Ð¾Ð¼
 		clientAddr.sin_family = AF_INET;
-		clientAddr.sin_port = htons(_port); // ¬á¬à¬â¬ä
+		clientAddr.sin_port = htons(_port); // Ð¿Ð¾Ñ€Ñ‚
 		if (connect(client, (SOCKADDR*)&clientAddr, sizeof(clientAddr)) == SOCKET_ERROR) {
 			cout << "Failed to connect server : " << WSAGetLastError() << endl;
 			return;
@@ -55,13 +55,13 @@ public:
 	}
 
 	void closeClient() {
-		closesocket(client); ////¬©¬Ñ¬Ü¬â¬í¬ä¬î ¬ã¬à¬Ü¬Ö¬ä
+		closesocket(client); ////Ð—Ð°ÐºÑ€Ñ‹Ñ‚ÑŒ ÑÐ¾ÐºÐµÑ‚
 		WSACleanup();
 	}
 
 	string Receive() {
 		if (recv(client, buffer, sizeof(buffer), 0) == SOCKET_ERROR) {
-			//¬°¬ê¬Ú¬Ò¬Ü¬Ñ ¬á¬à¬Ý¬å¬é¬Ö¬ß¬Ú¬ñ ¬Õ¬Ñ¬ß¬ß¬í¬ç ¬Ú ¬Ó¬í¬ç¬à¬Õ
+			//ÐžÑˆÐ¸Ð±ÐºÐ° Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ñ Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¸ Ð²Ñ‹Ñ…Ð¾Ð´
 			cout << "Receiving is failed : " << WSAGetLastError() << endl;
 			return "";
 		}
@@ -80,8 +80,7 @@ public:
 private:
 	string _ip{};
 	int _port{};
-	SOCKET client; //¬³¬à¬Ü¬Ö¬ä ¬Ü¬Ý¬Ú¬Ö¬ß¬ä¬Ñ
-	char buffer[messageLen] = { 0 }; //¬¢¬å¬æ¬Ö¬â ¬Õ¬Ñ¬ß¬ß¬í¬ç
+	SOCKET client; //Ð¡Ð¾ÐºÐµÑ‚ ÐºÐ»Ð¸ÐµÐ½Ñ‚Ð°
+	char buffer[messageLen] = { 0 }; //Ð‘ÑƒÑ„ÐµÑ€ Ð´Ð°Ð½Ð½Ñ‹Ñ…
 	string message{};
 };
-
