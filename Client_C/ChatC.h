@@ -22,7 +22,7 @@ public:
 		
 		while (_conn)
 		{
-			// �ެ֬߬� ��֬Ԭڬ���Ѭ�ڬ� �ڬݬ� �ѬӬ���ڬ٬Ѭ�ڬ� ���ݬ�٬�ӬѬ�֬ݬ�
+			// меню регистрации или авторизации пользователя
 			if (!_entry) {
 				cout << " \n1 - Authentication \n2 - Registration \n0 - Exit" << endl;
 			}
@@ -204,10 +204,10 @@ public:
 
 private:
 	Client _client;
-	string _ip;		//IP ��֬�Ӭ֬�� 
-	uint16_t _port;			//No. ������ ��֬�Ӭ֬��
+	string _ip;		//IP сервера 
+	uint16_t _port;			//No. порта сервера
 	bool _conn;
-	bool _entry;			//����ڬ�����Ӭڬ� = �Ӭ��� ���ݬ�٬�ӬѬ�֬ݬ� '��߬ݬѬ۬�'
-	string _currUser;	// ����ݬ�٬�ӬѬ�֬ݬ� '��߬ݬѬ۬�'
+	bool _entry;			//Присутсрвие = вход пользователя 'онлайн'
+	string _currUser;	// Пользователь 'онлайн'
 };
 
