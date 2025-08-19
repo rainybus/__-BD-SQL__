@@ -7,6 +7,15 @@
 using namespace std;
 
 class Chat_C {
+
+private:
+	Client _client;
+	string _ip;		//IP сервера 
+	uint16_t _port;			//No. порта сервера
+	bool _conn;
+	bool _entry;			//Присутсрвие = вход пользователя 'онлайн'
+	string _currUser;	// Пользователь 'онлайн'
+
 public:
 	Chat_C(const string& ip, uint16_t port) :
 		_ip(ip), _port(port), _conn(false), _entry(false) {
@@ -201,13 +210,6 @@ public:
 			}
 		}
 	}
-
-private:
-	Client _client;
-	string _ip;		//IP сервера 
-	uint16_t _port;			//No. порта сервера
-	bool _conn;
-	bool _entry;			//Присутсрвие = вход пользователя 'онлайн'
-	string _currUser;	// Пользователь 'онлайн'
 };
+
 
